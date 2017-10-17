@@ -1,0 +1,68 @@
+\documentclass{article}
+\title{Formula sheet for testing materials}
+\author{Izaak van Dongen}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \section{Material properties}
+        \subsection{Strength}
+            Strength is actually a stress value. Strength is the stress at
+            which a material "fails".
+            \begin{itemize}
+                \item
+                    The "yield strength" of a material is when it starts to
+                    plastically deform.
+                \item
+                    The "breaking strength" of a material is when it actually
+                    breaks.
+            \end{itemize}
+        \subsection{Young's Modulus}
+            Young's modulus is an indication of the stiffness of a material
+            (how much strain is produced by a stress while deforming
+            elastically). It is given by stress over strain, and denoted as
+            $E$:
+            \begin{equation}
+                E = \frac{\sigma}{\epsilon}
+            \end{equation}
+            As the units of $\sigma$ are $Pa$ and $\epsilon$ is dimensionless,
+            we can conclude that $E$ has units $Pa$.
+
+            Also, as we know formulas for both $\sigma$ and $\epsilon$, we can
+            substitute in:
+            \begin{align*}
+                E &= \frac{\sigma}{\epsilon}\\
+                  &= \frac{\frac{F}{A}}{\frac{x}{l}}\\
+                  &= \frac{Fl}{Ax}
+            \end{align*}
+    \section{Formulas}
+        \subsection{Stress}
+            The stress is defined as force applied divided by cross-sectional
+            area and denoted as $\sigma$:
+            \begin{equation}
+                \sigma = \frac{F}{A}
+            \end{equation}
+            Hence, stress is measured in $Nm^{-2}$, which is called $Pa$ (scals).
+        \subsection{Strain}
+            Strain is a measure of the deformation of a material. It denoted as
+            $\epsilon$ and given by extension over original length:
+            \begin{equation}
+                \epsilon = \frac{x}{l_0}
+            \end{equation}
+            As the units of both $x$ and $l_0$ are $m$,
+            \begin{align*}
+                \mathrm{units} &= \frac{m}{m}\\
+                               &= \mathrm{dimensionless}
+            \end{align*}
+        \subsection{Area of a circle}
+            This is given by
+            \begin{equation}
+                A_{circle} = \pi r^2
+            \end{equation}
+            We can also make some substitutions, as we know
+            \begin{align*}
+                r &= \frac{d}{2}\\
+                \Rightarrow A_{circle} &= \frac{\pi d^2}{4}
+            \end{align*}
+\end{document}

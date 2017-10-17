@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Material properties}{1}
+\contentsline {subsection}{\numberline {1.1}Strength}{1}
+\contentsline {subsection}{\numberline {1.2}Young's Modulus}{1}
+\contentsline {section}{\numberline {2}Formulas}{2}
+\contentsline {subsection}{\numberline {2.1}Stress}{2}
+\contentsline {subsection}{\numberline {2.2}Strain}{2}
+\contentsline {subsection}{\numberline {2.3}Area of a circle}{2}
