@@ -5,3 +5,7 @@ __pycache__/**
 bin
 *.aux
 *.log
+*.toc
+*.bbl
+*.blg
+*.lof

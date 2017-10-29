@@ -1,16 +1,81 @@
-\documentclass{scrartcl}
+\documentclass{article}
 \title{The Microscopic Structure of Materials}
-\subtitle{Metals (2)}
 \author{Izaak van Dongen}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{sidecap}
+
+\graphicspath{ {images/} }
+
 \begin{document}
     \maketitle
     \tableofcontents
-    \section{Introduction}
+    \section{Metals (2)}
+    \subsection{Crystallinity}
+    A crystalline structure means that ``individual particles are arranged in a
+    regular pattern over distances many times the spacing between the
+    particles'' \cite[p.~96]{OCRPhysics}. The important thing is the existance
+    of some regular structure. Such a regular square grid may also be called a
+    lattice - these can be used pretty much interchangeably. Most metals, in
+    addition to \textit{crystals} and ionic compounds, are crystalline in
+    structure.
+    \begin{figure}[h]
+        \includegraphics[width=0.25\textwidth]{crystal}
+        \centering
+        \caption{A 3-D NaCl crystal}
+    \end{figure}
+    \subsection{Polycrystallinity}
+    A ``polycrystalline'' material ``consists of a number of grains all
+    oriented differently relative to one another but with an ordered, regular
+    structure within each individual grain.'' \cite[p.~98]{OCRPhysics}. Here a
+    grain is a part of the material, on the microscopic level, which is like a
+    single ``proper'' crystal. The boundary between grains is called the
+    ``grain boundary``.
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{crystal_and_poly}
+        \centering
+        \caption{Crystallinity vs. polycrystallinity}
+    \end{figure}
+    \subsection{Dislocation}
+    A dislocation is a ``mismatch in [a] regular row of atoms''
+    \cite[p.~96]{OCRPhysics}. Dislocations allow atoms to slide, or ``slip''
+    over one another. This happens in a certain plane, which is called the
+    ``slip plane``.
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{dislocation}
+        \centering
+        \caption{Dislocation and slipping}
+    \end{figure}
+    This process of slipping accounts for why metals are relatively malleable
+    and ductile, as only a couple of atoms have to be ``moved'' - if metals
+    were ideal crystals, whole layers of atoms would have to be moved to deform
+    the metal.
+    
+    The fact that they are malleable also results in metals being tough, ie are
+    very unlikely to shatter when they break. This is because, as they are
+    malleable, cracks will just become blunt and stretch when subjected to
+    stress, rather than propagate, as they might in a ceramic.
+    \subsection{Alloys}
+    An alloy is a ``metal made by combining two or more metallic elements''.
+    Alloys are often stronger than just metals, and this can be explained in
+    terms of slipping. Alloy atoms can "pin" a dislocation, preventing slip.
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{alloy}
+        \centering
+        \caption{Pinned dislocation in an alloy}
+    \end{figure}
+    \subsection{Pure crystals}
+    Sometimes a pure crystal is desired. Solids are often made by cooling
+    liquids until they freeze. Liquids are amorphous, so by quickly cooling
+    them, the amorphousness of the liquid is ``captured'' and the resulting
+    solid isn't very crystalline. Cooling them more and more slowly can yield
+    more crystalline structures, with fewer dislocations. A very pure crystal
+    can be made simply by cooling a liquid very slowly.
 
-    Here is a citation\cite{OCRPhysics}
-
+    An example of this is high-purity silicon used in microchips. Here silicon
+    is used as a semiconductor, so it should be as pure as possible to maximise
+    its conductivity and hence the performance of the chip.
 \bibliography{metalsII}{}
 \bibliographystyle{plain}
 \end{document}
