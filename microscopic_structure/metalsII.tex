@@ -1,17 +1,23 @@
 \documentclass{article}
-\title{The Microscopic Structure of Materials}
+\title{The microscopic structure of materials}
 \author{Izaak van Dongen}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{sidecap}
+\usepackage{savetrees}
 
 \graphicspath{ {images/} }
 
+\usepackage{amsthm}
+\usepackage[framemethod=tikz]{mdframed}
+
 \begin{document}
-    \maketitle
-    \tableofcontents
     \section{Metals (2)}
+    \subsection{Definitions}
+	\begin{mdframed}[backgroundcolor = gray!30,
+		frametitle = Crystalline]
+		Particles are arranged in a regular lattice
+	\end{mdframed}
     \subsection{Crystallinity}
     A crystalline structure means that ``individual particles are arranged in a
     regular pattern over distances many times the spacing between the
@@ -21,7 +27,7 @@
     addition to \textit{crystals} and ionic compounds, are crystalline in
     structure.
     \begin{figure}[h]
-        \includegraphics[width=0.25\textwidth]{crystal}
+        \includegraphics[width=0.1\textwidth]{crystal}
         \centering
         \caption{A 3-D NaCl crystal}
     \end{figure}
@@ -33,7 +39,7 @@
     single ``proper'' crystal. The boundary between grains is called the
     ``grain boundary``.
     \begin{figure}[h]
-        \includegraphics[width=\textwidth]{crystal_and_poly}
+        \includegraphics[width=0.5\textwidth]{crystal_and_poly}
         \centering
         \caption{Crystallinity vs. polycrystallinity}
     \end{figure}
@@ -43,7 +49,7 @@
     over one another. This happens in a certain plane, which is called the
     ``slip plane``.
     \begin{figure}[h]
-        \includegraphics[width=\textwidth]{dislocation}
+        \includegraphics[width=0.5\textwidth]{dislocation}
         \centering
         \caption{Dislocation and slipping}
     \end{figure}
@@ -61,7 +67,7 @@
     Alloys are often stronger than just metals, and this can be explained in
     terms of slipping. Alloy atoms can "pin" a dislocation, preventing slip.
     \begin{figure}[h]
-        \includegraphics[width=\textwidth]{alloy}
+        \includegraphics[width=0.5\textwidth]{alloy}
         \centering
         \caption{Pinned dislocation in an alloy}
     \end{figure}
