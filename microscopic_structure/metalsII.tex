@@ -14,10 +14,45 @@
 \begin{document}
     \section{Metals (2)}
     \subsection{Definitions}
-	\begin{mdframed}[backgroundcolor = gray!30,
-		frametitle = Crystalline]
-		Particles are arranged in a regular lattice
-	\end{mdframed}
+%    \begin{mdframed}[backgroundcolor = gray!30,
+%        frametitle = Crystalline]
+%        Particles are arranged in a regular lattice
+%    \end{mdframed}
+%    \begin{mdframed}[backgroundcolor = gray!30,
+%        frametitle = Polycrystalline]
+%        There are different crystalline grains
+%    \end{mdframed}
+%    \begin{mdframed}[backgroundcolor = gray!30,
+%        frametitle = Grain]
+%        A single crystalline subsection of a polycrystalline material
+%    \end{mdframed}
+%    \begin{mdframed}[backgroundcolor = gray!30,
+%        frametitle = Grain boundary]
+%        The boundary between grains
+%    \end{mdframed}
+%    \begin{mdframed}[backgroundcolor = gray!30,
+%        frametitle = Lattice]
+%        A regular (square) array of particles
+%    \end{mdframed}
+    \begin{mdframed}[backgroundcolor = gray!30,
+        frametitle = Slip plane]
+        A two-dimensional plane in which slip occurs - this is aligned with a
+        dislocation
+    \end{mdframed}
+    \begin{mdframed}[backgroundcolor = gray!30,
+        frametitle = Lattice defects]
+        Imperfections/irregularities in the regular lattice structure. Examples
+        include the dislocation.
+    \end{mdframed}
+    \begin{mdframed}[backgroundcolor = gray!30,
+        frametitle = Dislocations]
+        A missing particle in a lattice structure, which allows slip to occur
+    \end{mdframed}
+    \begin{mdframed}[backgroundcolor = gray!30,
+        frametitle = Alloys]
+        Compounds of multiple metals. Alloys are often strong as alloy
+        particles can ``pin'' dislocations.
+    \end{mdframed}
     \subsection{Crystallinity}
     A crystalline structure means that ``individual particles are arranged in a
     regular pattern over distances many times the spacing between the
@@ -80,8 +115,45 @@
     can be made simply by cooling a liquid very slowly.
 
     An example of this is high-purity silicon used in microchips. Here silicon
-    is used as a semiconductor, so it should be as pure as possible to maximise
-    its conductivity and hence the performance of the chip.
+    is used as a semiconductor \cite{SOSilicon}, so it should be as pure as
+    possible to maximise its conductivity and hence the performance of the
+    chip.
+    \subsection{Other lattice defects}
+    Other lattice defects can also occur. One of these is a ``vacancy''. This
+    is when ``an atom is missing from its lattice point ''
+    \cite{LatticeDefects}.  The result of a vacancy is that ``there is a change
+    in the coordination of atoms around the defect. This means that the forces
+    are not balanced in the same way as for other atoms in the solid, which
+    results in lattice distortion around the defect'' \cite{VirginiaDefects}.
+    \begin{figure}[h]
+        \includegraphics[width=0.25\textwidth]{vacancy}
+        \centering
+        \caption{Vacancy in a lattice}
+    \end{figure}
+
+    Another defect is the ``interstital particle''. This is when there is an
+    ``extra'' particle in the lattice. This defect has a similar effect to a
+    vacancy \cite{VirginiaDefects}.
+    \begin{figure}[h]
+        \includegraphics[width=0.25\textwidth]{interstital}
+        \centering
+        \caption{Interstital particle in a lattice}
+    \end{figure}
+
+    Both vacancies and interstital particles are highly mobile, and if they
+    meet each other, they can ``annihilate'', or cancel each other out
+    \cite{LatticeDefects}.
+
+    Another type of lattice defect is an impurity - this is where ``a ``wrong''
+    atom is placed on a regular lattice point'' \cite{LatticeDefects}.
+    \begin{figure}[h]
+        \includegraphics[width=0.25\textwidth]{impurity}
+        \centering
+        \caption{Impurity in a lattice}
+    \end{figure}
+\nocite{DoITPoMS}
+\nocite{JimBook}
+\nocite{HowItWorks}
 \bibliography{metalsII}{}
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 \end{document}
