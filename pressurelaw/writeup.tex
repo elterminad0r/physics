@@ -1,0 +1,54 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[separate-uncertainty]{siunitx}
+\usepackage[siunitx]{gnuplottex}
+\usepackage{csvsimple}
+\usepackage{booktabs}
+\usepackage[margin=1in,tmargin=1in]{geometry}
+\usepackage[square,numbers]{natbib}
+
+\usepackage{url}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\url{https://github.com/elterminad0r/physics}}
+
+\begin{document}
+
+\begin{minipage}[c]{0.2\textwidth}
+\csvreader[tabular=r r,
+    table head=\toprule\textbf{P/\si{\kilo\pascal}} &
+               \textbf{T/\si{\degreeCelsius}} \\\midrule,
+    table foot=\bottomrule]
+{data.csv}{}
+{\csvcoli&\csvcolii}
+\end{minipage}
+\begin{minipage}[c]{0.4\textwidth}
+\begin{gnuplot}[terminal=epslatex]
+set key autotitle columnhead
+unset key
+set datafile separator ','
+ATMOSPHERE = 101.6
+f(x) = m * (x - T_0)
+FIT_LIMIT = 1e-4
+fit f(x) 'data.csv' u 2:($1+ATMOSPHERE) via m, T_0
+set ylabel 'P/\si{\kilo\pascal}'
+set xlabel 'T/\si{\degreeCelsius}'
+set label 1 sprintf('\SI{0}{\kelvin} = \SI{%.1f \pm %.1f}{\degreeCelsius}',\
+            T_0, T_0_err) at -300,100
+set yrange [0:150]
+set xrange [-400:100]
+set title 'Using the pressure law to determine absolute 0'
+plot 'data.csv' u 2:($1+ATMOSPHERE), f(x)
+\end{gnuplot}
+\end{minipage}
+
+The expected value of \SI{0}{\kelvin} being \SI{-273.15}{\degreeCelsius} \cite{SI}.
+This lies well outside of the graphically deduced uncertainty. This is an error
+of about 30\%.
+
+\bibliographystyle{agsm}
+\bibliography{sources}
+
+\end{document}
