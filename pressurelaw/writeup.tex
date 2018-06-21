@@ -5,14 +5,13 @@
 \usepackage{booktabs}
 \usepackage[margin=1in,tmargin=1in]{geometry}
 \usepackage[square,numbers]{natbib}
-
+\usepackage{parskip}
 \usepackage{url}
-
 \usepackage{fancyhdr}
 
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{\url{https://github.com/elterminad0r/physics}}
+\lhead{\url{https://github.com/elterminad0r/physics/tree/master/pressurelaw}}
 
 \begin{document}
 
@@ -46,7 +45,16 @@ plot 'data.csv' u 2:($1+ATMOSPHERE), f(x)
 
 The expected value of \SI{0}{\kelvin} being \SI{-273.15}{\degreeCelsius} \cite{SI}.
 This lies well outside of the graphically deduced uncertainty. This is an error
-of about 30\%.
+of about 30\%. This is probably due to a number of unquantified systematic
+errors.
+
+One factor could be the fact that temperature throughout the air sample wasn't
+constant, so our reading of temperature may not reflect the actual average
+value.
+
+Another contributing factor might be a pressure leak - this makes sense as it
+would decrease the gradient, which, at this level of extrapolation can have
+significant effects on the $x$-intercept.
 
 \bibliographystyle{agsm}
 \bibliography{sources}
