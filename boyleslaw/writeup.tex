@@ -24,7 +24,7 @@ f(x) = n * MOLAR_CONST * ROOM_TEMP * x - c
 FIT_LIMIT = 1e-9
 fit f(x) 'data.tsv' u (0.001/($1 + 101.6 + 0.3)):($2/1000000) via n, c
 set title "Number of moles in a gas sample from Boyle's law"
-set ylabel '$V$/\si{m^3}' offset -1.6,0
+set ylabel '$V$/\si{m^3}'
 set xlabel '$\frac{1}{p}$/\si{Pa^{-1}}'
 set label 1 sprintf('$n$ = \SI{%.1f \pm %.3f}{\milli\mol}', 1000 * n, 1000 * n_err) at 1e-6,5e-5
 set label 2 sprintf('$V_{extra}$ = \SI{%.2e}{\milli \litre}', c) at 1e-6,4e-5
