@@ -3,136 +3,65 @@ library(ggplot2)
 U_s = 3
 U_t = 0.1
 
-s_df_1 <- read.table("data/1.csv", sep=",", header=TRUE)
-s_df_2 <- read.table("data/2.csv", sep=",", header=TRUE)
-s_df_3 <- read.table("data/3.csv", sep=",", header=TRUE)
-s_df_4 <- read.table("data/4.csv", sep=",", header=TRUE)
+s_0s = c(654, 656, 608, 567)
+taus = c(30, 19, 17, 10)
 
-s_df_1
-s_df_2
-s_df_3
-s_df_4
+s_dfs = c()
+per_models = c()
 
-t_0_1 = head(s_df_1$t, n=1)
-s_0_1 = 654
-A_1 = head(s_df_1$s, n=1) - s_0_1
-m_1 <- nls(s ~ s_0_1 + A_1 * exp(-(t - t_0_1) / tau),
-           start=list(s_0_1 = s_0_1, A_1 = A_1, tau = 30), data=s_df_1)
-summary(m_1)
+for (i in 1:4) {
+    message(paste("Analysing Experiment", i))
+    s_df <- read.table(paste0("data/", i, ".csv"), sep=",", header=TRUE)
+    s_df$n <- seq_along(s_df$t)
+    s_df$i <- i
+    s_dfs[[i]] <- s_df
+    print(s_df)
 
-t_0_2 = head(s_df_2$t, n=1)
-s_0_2 = 656
-A_2 = head(s_df_2$s, n=1) - s_0_2
-m_2 <- nls(s ~ s_0_2 + A_2 * exp(-(t - t_0_2) / tau),
-           start=list(s_0_2 = s_0_2, A_2 = A_2, tau = 19), data=s_df_2)
-summary(m_2)
+    t_0 = head(s_df$t, n=1)
+    s_0 = s_0s[i]
+    A = head(s_df$s, n=1) - s_0
+    m_exp <- nls(s ~ s_0 + A * exp(-(t - t_0) / tau),
+                 start=list(s_0 = s_0, A = A, tau = taus[i]), data=s_df)
+    coef_exp <- coef(summary(m_exp))
+    print(coef_exp)
 
-t_0_3 = head(s_df_3$t, n=1)
-s_0_3 = 608
-A_3 = head(s_df_3$s, n=1) - s_0_3
-m_3 <- nls(s ~ s_0_3 + A_3 * exp(-(t - t_0_3) / tau),
-           start=list(s_0_3 = s_0_3, A_3 = A_3, tau = 17), data=s_df_3)
-summary(m_3)
+    m_per <- lm(t ~ n, data=s_df)
+    coef_per <- coef(summary(m_per))
+    print(coef_per)
+    per_models[[i]] <- m_per
 
-t_0_4 = head(s_df_4$t, n=1)
-s_0_4 = 567
-A_4 = head(s_df_4$s, n=1) - s_0_4
-m_4 <- nls(s ~ s_0_4 + A_4 * exp(-(t - t_0_4) / tau),
-           start=list(s_0_4 = s_0_4, A_4 = A_4, tau = 10), data=s_df_4)
-summary(m_4)
+    message(paste("So, Q = pi * tau / T =",
+                   pi * coef_exp["tau", "Estimate"]
+                      / coef_per["n", "Estimate"]))
 
-m_1_per <- lm(t ~ seq_along(t), data=s_df_1)
-summary(m_1_per)
+    print(qplot(t, s, data=s_df,
+          main=paste0("Local maximum displacement of damped oscillator (",
+                       i, ")"),
+          xlab="t / s", ylab="s / mm") +
+          geom_errorbar(data=s_df, mapping=aes(ymin=s-U_s, ymax=s+U_s)) +
+          geom_errorbarh(data=s_df, mapping=aes(xmin=t-U_t, xmax=t+U_t)) +
+          theme(panel.grid.minor = element_line(colour="gray", size=0.4),
+                panel.grid.major = element_line(colour="gray", size=1),
+                panel.background = element_blank()) +
+          geom_line(aes(y = predict(m_exp)), color="steelblue", size=1))
+}
 
-m_2_per <- lm(t ~ seq_along(t), data=s_df_2)
-summary(m_2_per)
+p_plot <- ggplot(
+    rbind(rbind(rbind(s_dfs[[1]], s_dfs[[2]]), s_dfs[[3]]), s_dfs[[4]]),
+    aes(x = n, y = t)) +
+    geom_errorbar(aes(ymin=t-U_t, ymax=t+U_t, color=factor(i))) +
+    geom_errorbarh(aes(height=2, xmin=n, xmax=n, color=factor(i))) +
+    labs(x="n", y="t / s",
+         title="Period of oscillation of different damped oscillators") +
+    theme(panel.grid.minor = element_line(colour="gray", size=0.4),
+          panel.grid.major = element_line(colour="gray", size=1),
+          panel.background = element_blank()) +
+    scale_color_discrete(name = "Experiment") +
+    geom_point(aes(color=factor(i)))
 
-m_3_per <- lm(t ~ seq_along(t), data=s_df_3)
-summary(m_3_per)
+for (i in 1:4) {
+    p_plot <- p_plot + geom_line(y = predict(per_models[[i]]), data=s_dfs[[i]],
+                                 aes(color=factor(i)))
+}
 
-m_4_per <- lm(t ~ seq_along(t), data=s_df_4)
-summary(m_4_per)
-
-qplot(t, s, data=s_df_1, main="Peaks of damped oscillator",
-      xlab="t / s", ylab="s / mm") +
-      geom_errorbar(data=s_df_1, mapping=aes(ymin=s-U_s, ymax=s+U_s)) +
-      geom_errorbarh(data=s_df_1, mapping=aes(xmin=t-U_t, xmax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_line(aes(y = predict(m_1)), color="steelblue", size=1)
-
-qplot(seq_along(t), t, data=s_df_1, main="Peak times",
-      xlab="n", ylab="t_n / s") +
-      geom_errorbar(data=s_df_1, mapping=aes(ymin=t-U_t, ymax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_smooth(method = "lm", color="steelblue")
-
-qplot(t, s, data=s_df_2, main="Peaks of damped oscillator",
-      xlab="t / s", ylab="s / mm") +
-      geom_errorbar(data=s_df_2, mapping=aes(ymin=s-U_s, ymax=s+U_s)) +
-      geom_errorbarh(data=s_df_2, mapping=aes(xmin=t-U_t, xmax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_line(aes(y = predict(m_2)), color="steelblue", size=1)
-
-qplot(seq_along(t), t, data=s_df_2, main="Peak times",
-      xlab="n", ylab="t_n / s") +
-      geom_errorbar(data=s_df_2, mapping=aes(ymin=t-U_t, ymax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_smooth(method = "lm", color="steelblue")
-
-qplot(t, s, data=s_df_3, main="Peaks of damped oscillator",
-      xlab="t / s", ylab="s / mm") +
-      geom_errorbar(data=s_df_3, mapping=aes(ymin=s-U_s, ymax=s+U_s)) +
-      geom_errorbarh(data=s_df_3, mapping=aes(xmin=t-U_t, xmax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_line(aes(y = predict(m_3)), color="steelblue", size=1)
-
-qplot(seq_along(t), t, data=s_df_3, main="Peak times",
-      xlab="n", ylab="t_n / s") +
-      geom_errorbar(data=s_df_3, mapping=aes(ymin=t-U_t, ymax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_smooth(method = "lm", color="steelblue")
-
-qplot(t, s, data=s_df_4, main="Peaks of damped oscillator",
-      xlab="t / s", ylab="s / mm") +
-      geom_errorbar(data=s_df_4, mapping=aes(ymin=s-U_s, ymax=s+U_s)) +
-      geom_errorbarh(data=s_df_4, mapping=aes(xmin=t-U_t, xmax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_line(aes(y = predict(m_4)), color="steelblue", size=1)
-
-qplot(seq_along(t), t, data=s_df_4, main="Peak times",
-      xlab="n", ylab="t_n / s") +
-      geom_errorbar(data=s_df_4, mapping=aes(ymin=t-U_t, ymax=t+U_t)) +
-      theme(panel.grid.minor = element_line(colour="gray", size=0.4),
-            panel.grid.major = element_line(colour="gray", size=1),
-            panel.background = element_blank()) +
-      #scale_y_continuous(minor_breaks = seq(0, 0.12, 0.002), breaks = seq(0, 0.12, 0.01)) +
-      #scale_x_continuous(minor_breaks = seq(0, 110, 2), breaks = seq(0, 110, 10)) +
-      geom_smooth(method = "lm", color="steelblue")
+p_plot
