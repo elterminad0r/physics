@@ -6,6 +6,7 @@ U_t = 0.1
 s_0s = c(654, 656, 608, 567)
 taus = c(30, 19, 17, 10)
 
+cumul_df = data.frame()
 s_dfs = c()
 per_models = c()
 
@@ -15,6 +16,7 @@ for (i in 1:4) {
     s_df$n <- seq_along(s_df$t)
     s_df$i <- i
     s_dfs[[i]] <- s_df
+    cumul_df <- rbind(cumul_df, s_df)
     print(s_df)
 
     t_0 = head(s_df$t, n=1)
@@ -46,9 +48,7 @@ for (i in 1:4) {
           geom_line(aes(y = predict(m_exp)), color="steelblue", size=1))
 }
 
-p_plot <- ggplot(
-    rbind(rbind(rbind(s_dfs[[1]], s_dfs[[2]]), s_dfs[[3]]), s_dfs[[4]]),
-    aes(x = n, y = t)) +
+p_plot <- ggplot(cumul_df, aes(x = n, y = t)) +
     geom_errorbar(aes(ymin=t-U_t, ymax=t+U_t, color=factor(i))) +
     geom_errorbarh(aes(height=2, xmin=n, xmax=n, color=factor(i))) +
     labs(x="n", y="t / s",
